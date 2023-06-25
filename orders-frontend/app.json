@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "orders-frontend",
+    "slug": "orders-frontend",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
