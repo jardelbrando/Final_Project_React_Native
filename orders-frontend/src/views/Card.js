@@ -10,7 +10,6 @@ import { useAuth } from '../context/AuthContext';
 const Card = ({navigation, route}) => {
 
     const[quantity, setQuantity] = useState(0);
-    const[tableNumber, setTableNumber] = useState(1);
     
     const object = route.params;
    
@@ -18,7 +17,13 @@ const Card = ({navigation, route}) => {
         authUser,
         setAuthUser,
         isLoggedIn,
-        setIsLoggedIn} = useAuth();
+        setIsLoggedIn,
+        orders,
+        setOrders,
+        tableNumber,
+        setTableNumber,
+        total,
+        setTotal} = useAuth();
 
     const minusQuantity = ()=> {
         if(quantity != 0){
@@ -32,33 +37,32 @@ const Card = ({navigation, route}) => {
         }
     }
 
-    const minusTableNumber = ()=> {
-        if(tableNumber!= 1){
-            setTableNumber(tableNumber-1)
-        }
-    }
-
-    const addTableNumber = ()=> {
-        if(tableNumber< 15 ){
-            setTableNumber(tableNumber+1)
-        }
-    }
-
     const order = async () => {
         if(quantity > 0){
             try{
-                    
-                    console.log(tableNumber);
-                    console.log(object.id);
-                    console.log(quantity);
-                    const response = await axios.post(`http://192.168.15.50:8080/orders`, 
-                    {
-                     "tableNumber": parseInt(tableNumber),
-                     "disheId": parseInt(object.id), 
-                     "quantity": parseInt(quantity), 
-                     "observation": "nenhuma"
-                    });
+
+                const orderObject = {
+                    tableNumber: tableNumber,
+                    disheId: object.id,
+                    quantity: quantity
+                }
+                if(orders == 0){
+                    setOrders([orderObject])
+                }else{
+                    let listOrders = orders
+                    listOrders.push(orderObject)
+                    setOrders(listOrders)
+                }
+               
+                const response = await axios.post(`http://192.168.15.50:8080/orders`, 
+                {
+                    "tableNumber": parseInt(tableNumber),
+                    "disheId": parseInt(object.id), 
+                    "quantity": parseInt(quantity), 
+                    "observation": "nenhuma"
+                });
                 Alert.alert("Pedido Realizado" ,"Seu pedido foi encaminhado para a cozinha!");
+                setTotal(total + object.price * quantity);
                 navigation.goBack();
 
             }catch(error){
@@ -94,13 +98,7 @@ const Card = ({navigation, route}) => {
                             <Text style={styles.orderButtonText}>Número da mesa</Text>
                         </View>   
                         <View style={styles.orderNumber}>
-                            <TouchableOpacity style={[styles.quantityButtons, {marginRight: 20}]} onPress={minusTableNumber}>
-                                <Icon name='horizontal-rule' />
-                            </TouchableOpacity>
-                            <Text style={styles.quantityButtons}>{tableNumber}</Text>
-                            <TouchableOpacity style={[styles.quantityButtons, {marginLeft: 20}]} onPress={addTableNumber}>
-                                <Icon name='add' />
-                            </TouchableOpacity>
+                            <Text style={[styles.quantityButtons , {paddingLeft: 45, paddingRight: 45}]}>{tableNumber}</Text>
                         </View>  
                     </View>
                     <View style={[{flexDirection:'row', marginTop: 5}]}> 
@@ -235,6 +233,5 @@ const styles = StyleSheet.create({
 
     quantityButtons: {
         fontSize: 30,
-        
     }
 })

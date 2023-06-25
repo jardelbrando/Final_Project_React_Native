@@ -16,7 +16,9 @@ const Home = ({navigation}) => {
         authUser,
         setAuthUser,
         isLoggedIn,
-        setIsLoggedIn} = useAuth();
+        setIsLoggedIn,
+        orders,
+        setOrders} = useAuth();
 
     useEffect(() => {
         const backHandler = BackHandler.addEventListener('hardwareBackPress', () => true)

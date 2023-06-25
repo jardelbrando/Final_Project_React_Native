@@ -26,7 +26,7 @@ const Login = ({navigation}) => {
            
             setIsLoggedIn(true);
             setAuthUser(response.data.token)
-            navigation.navigate('DrawerScreens');
+            navigation.navigate('TableNumber');
             BackHandler.addEventListener('hardwareBackPress', false);
             
         }catch (error){

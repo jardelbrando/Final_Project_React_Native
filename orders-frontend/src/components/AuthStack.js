@@ -11,6 +11,7 @@ import Salad from '../views/Salad';
 import Finish from '../views/Finish';
 import Card from '../views/Card';
 import Drinks from '../views/Drinks';
+import TableNumber from '../views/TableNumber';
 import Onboarding from '../views/Onboarding';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
@@ -18,6 +19,7 @@ import { ListItem } from '@rneui/base';
 import Dessert from '../views/Dessert';
 import 'react-native-gesture-handler';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import { Icon } from '@rneui/themed';
 
 
 
@@ -35,7 +37,6 @@ export default props => {
             <Tab.Navigator screenOptions={{tabBarScrollEnabled: true, 
                 headerShown: false, 
                 tabBarStyle: {
-                    paddingTop: 50, 
                     backgroundColor: '#c93e22',
                 },
                 tabBarLabelStyle: {
@@ -56,21 +57,26 @@ export default props => {
 
     function DrawerScreens (){
         return(
-            <Drawer.Navigator screenOptions={{headerShown: false}} initialRouteName='Home'>
-                <Drawer.Screen  name='Menu' component={HomeScreen}></Drawer.Screen>
-                <Drawer.Screen  name='Encerrar o atendimento' component={Finish}></Drawer.Screen>
+            <Drawer.Navigator screenOptions={{
+                headerShown: true, 
+                headerStyle:{
+                    backgroundColor: '#c93e22',
+                },
+                headerTitleStyle: {
+                    color: 'white',
+                },
+                headerTintColor: 'white'
+                 }} initialRouteName='Home'>
+                <Drawer.Screen  name='Menu' component={HomeScreen} options={{
+                        drawerIcon: () => <Icon name='fastfood' color='#c93e22'/>
+                    }}></Drawer.Screen>
+                <Drawer.Screen  name='Encerrar o atendimento' component={Finish}
+                    options={{
+                        drawerIcon: () => <Icon name='attach-money' color='#c93e22'/>
+                    }}></Drawer.Screen>
             </Drawer.Navigator>
         )
     }
-
-    function Finish (){
-        return(
-            <View>
-                <Text>oi</Text>
-            </View>
-        )
-    }
-
 
     function ModalScreen({ navigation }) {
         return (
@@ -85,6 +91,7 @@ export default props => {
         <Stack.Navigator screenOptions={{headerShown: false}}>
             <Stack.Screen name='Onboarding' component={Onboarding} />
             <Stack.Screen name='Login' component={Login} />
+            <Stack.Screen name='TableNumber' component={TableNumber} />
             <Stack.Screen name='DrawerScreens' component={DrawerScreens} />
             <Stack.Screen name='Card' component={Card} />
             <Stack.Screen name='ModalScreen' component={ModalScreen} />
