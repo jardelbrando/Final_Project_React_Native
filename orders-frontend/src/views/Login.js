@@ -26,7 +26,7 @@ const Login = ({navigation}) => {
            
             setIsLoggedIn(true);
             setAuthUser(response.data.token)
-            navigation.navigate('HomeScreen');
+            navigation.navigate('DrawerScreens');
             BackHandler.addEventListener('hardwareBackPress', false);
             
         }catch (error){

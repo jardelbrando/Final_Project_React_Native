@@ -8,6 +8,7 @@ import Meet from '../views/Meet';
 import Login from '../views/Login';
 import Pasta from '../views/Pasta';
 import Salad from '../views/Salad';
+import Finish from '../views/Finish';
 import Card from '../views/Card';
 import Drinks from '../views/Drinks';
 import Onboarding from '../views/Onboarding';
@@ -15,6 +16,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { ListItem } from '@rneui/base';
 import Dessert from '../views/Dessert';
+import 'react-native-gesture-handler';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 
 
 
@@ -23,6 +26,8 @@ export default props => {
     const Stack = createNativeStackNavigator();
 
     const Tab = createMaterialTopTabNavigator();
+
+    const Drawer = createDrawerNavigator();
 
 
     function HomeScreen (){
@@ -49,6 +54,24 @@ export default props => {
         );
     }
 
+    function DrawerScreens (){
+        return(
+            <Drawer.Navigator screenOptions={{headerShown: false}} initialRouteName='Home'>
+                <Drawer.Screen  name='Menu' component={HomeScreen}></Drawer.Screen>
+                <Drawer.Screen  name='Encerrar o atendimento' component={Finish}></Drawer.Screen>
+            </Drawer.Navigator>
+        )
+    }
+
+    function Finish (){
+        return(
+            <View>
+                <Text>oi</Text>
+            </View>
+        )
+    }
+
+
     function ModalScreen({ navigation }) {
         return (
           <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -62,7 +85,7 @@ export default props => {
         <Stack.Navigator screenOptions={{headerShown: false}}>
             <Stack.Screen name='Onboarding' component={Onboarding} />
             <Stack.Screen name='Login' component={Login} />
-            <Stack.Screen name='HomeScreen' component={HomeScreen} />
+            <Stack.Screen name='DrawerScreens' component={DrawerScreens} />
             <Stack.Screen name='Card' component={Card} />
             <Stack.Screen name='ModalScreen' component={ModalScreen} />
         </Stack.Navigator>
