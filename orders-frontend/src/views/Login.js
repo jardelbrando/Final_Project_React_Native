@@ -40,21 +40,6 @@ const Login = ({navigation}) => {
 
     }
 
-
-    const logout = async() =>{
-        try{
-            const response = await axios.post(`http://192.168.15.50:8080/tokens`, {email: email, password: password});
-            setIsLoggedIn(false);
-            setAuthUser(null)
-            
-        }catch (error){
-            console.log(error);
-        }
-
-    }
-
-    
-
     
 
     return(
